@@ -57,6 +57,6 @@ jobs:
           name: ccr.ccs.tencentyun.com/jeffid/helloci:beta  # docker image 的名字
           username: ${{ secrets.TC_DOCKER_USERNAME}} # 用户名
           password: ${{ secrets.TC_DOCKER_PASSWORD }} # 密码
-          registry: registry.cn-shenzhen.aliyuncs.com # Registry
+          registry: ccr.ccs.tencentyun.com # Registry
           dockerfile: Dockerfile # 指定 Dockerfile 的位置
           tag_names: true # 是否将 release 的 tag 作为 docker image 的 tag
