@@ -1,49 +1,50 @@
-name: Go Test
+name: Go-CI Release
 
-on: [ push, pull_request ]
+on:
+  create:
+    tags:
+      - *
 
 jobs:
-
-  helloci-build:
-    name: Test with go ${{ matrix.go_version }} on ${{ matrix.os }}
+  release:
+    name: Realease with go ${{ matrix.go_version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     environment:
       name: helloci
-
     strategy:
       matrix:
-        go_version: [ 1.16 ]
+        go_version: [ 1.18 ]
         os: [ ubuntu-22.04 ]
-
     steps:
-
       - name: Set up Go ${{ matrix.go_version }}
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go_version }}
-        id: go
+        run: go env
 
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Tidy
-        run: |
-          go mod tidy
+      - name: Validates GO releaser config
+        uses: goreleaser/goreleaser-action@v3
+        with:
+          version: latest
+          args: check
+
+      - name: Create release on GitHub
+        # uses: docker://goreleaser/goreleaser:latest
+        uses: goreleaser/goreleaser-action@v3
+        with:
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build
         run: |
           pwd
           ls -laph
-          GOOS=linux GOARCH=amd64 go build  -v -o helloci .
-
-      - name: Test build result
-        run: ./helloci
-
-      - name: Collect main.go file
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: main-output
-          path: helloci
+          go build  -v -o goci .
 
       - name: Publish to Registry (Aliyun)
         uses: elgohr/Publish-Docker-Github-Action@v4
@@ -64,3 +65,5 @@ jobs:
           registry: ccr.ccs.tencentyun.com # Registry
           dockerfile: Dockerfile # 指定 Dockerfile 的位置
           tag_names: true # 是否将 release 的 tag 作为 docker image 的 tag
+
+

@@ -1,14 +1,16 @@
-FROM ubuntu:22.04
+#FROM ubuntu:22.04
+#FROM centos:7.9.2009
+FROM debian:stable-20220801
 
 LABEL maintainer="Hello" \
       email="404@qq.com"
 
-WORKDIR /opt/helloci
+WORKDIR /opt/home
 
-COPY helloci /opt/helloci
-RUN chmod +x /opt/helloci
+COPY goci /opt/home
+RUN chmod +x /opt/home
 
-CMD ["/opt/helloci/helloci"]
+CMD ["/opt/home/goci"]
 
-# docker build -t helloci:tagname .
+# docker build -t goci:tagname .
 # docker run -it --rm helloci /bin/bash
