@@ -38,7 +38,7 @@ jobs:
           files: ./coverage.txt
 
 
-  build-push:
+  build:
     name: Build and push with go ${{ matrix.go_version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     environment:
@@ -66,7 +66,7 @@ jobs:
         run: ./goci
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
+        uses: actions/upload-artifact@v3
         with:
-          name: goci
-          path: goci
+          name: goci_${{ matrix.os }}_${{ matrix.go_version }}
+          path: ./goci
