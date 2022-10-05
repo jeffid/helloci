@@ -23,9 +23,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Lint
-          uses: golangci/golangci-lint-action@v3
-          with:
-            version: latest
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
 
       - name: Run unit tests.
         run: |
@@ -72,23 +72,3 @@ jobs:
         with:
           name: goci
           path: goci
-
-      - name: Publish to Registry (Aliyun)
-        uses: elgohr/Publish-Docker-Github-Action@v4
-        with:
-          name: registry.cn-shenzhen.aliyuncs.com/jeffid/helloci  # docker image 的名字
-          username: ${{ secrets.DOCKER_USERNAME}} # 用户名
-          password: ${{ secrets.DOCKER_PASSWORD }} # 密码
-          registry: registry.cn-shenzhen.aliyuncs.com # Registry
-          dockerfile: Dockerfile # 指定 Dockerfile 的位置
-          tag_names: true # 是否将 release 的 tag 作为 docker image 的 tag
-
-      - name: Publish to Registry (Tencnet Cloud)
-        uses: elgohr/Publish-Docker-Github-Action@v4
-        with:
-          name: ccr.ccs.tencentyun.com/jeffid/helloci  # docker image 的名字
-          username: ${{ secrets.TC_DOCKER_USERNAME}} # 用户名
-          password: ${{ secrets.TC_DOCKER_PASSWORD }} # 密码
-          registry: ccr.ccs.tencentyun.com # Registry
-          dockerfile: Dockerfile # 指定 Dockerfile 的位置
-          tag_names: true # 是否将 release 的 tag 作为 docker image 的 tag
