@@ -53,9 +53,6 @@ jobs:
         with:
           go-version: ${{ matrix.go_version }}
 
-      - name: Go env
-        run: go env
-
       - name: Checkout
         uses: actions/checkout@v3
 

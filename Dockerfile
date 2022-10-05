@@ -13,4 +13,4 @@ RUN chmod +x /opt/home
 CMD ["/opt/home/goci"]
 
 # docker build -t goci:tagname .
-# docker run -it --rm helloci /bin/bash
+# docker run -it --rm goci:latest /bin/bash
