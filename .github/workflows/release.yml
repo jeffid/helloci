@@ -1,7 +1,7 @@
 name: Go-CI Release
 
 on:
-  create:
+  push:
     tags:
       - '*'
 

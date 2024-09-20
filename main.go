@@ -12,7 +12,7 @@ func main() {
 }
 
 func Echo() {
-	fmt.Println("EchoohcE 2")
+	fmt.Println("EchoohcE 3")
 }
 
 func Spew() {
